@@ -28,31 +28,31 @@ GCP data security is **defense in depth** — multiple independent layers. The e
 
 ```mermaid
 graph TD
-    subgraph Layer 1 - Identity
+    subgraph L1["Layer 1 - Identity"]
         IAM[IAM\nWho can do what]
         SA[Service Accounts\nWorkload identity]
     end
 
-    subgraph Layer 2 - Network Perimeter
+    subgraph L2["Layer 2 - Network Perimeter"]
         VPC[VPC Service Controls\nPrevent data exfiltration]
         PSC[Private Service Connect\nPrivate API access]
     end
 
-    subgraph Layer 3 - Data
+    subgraph L3["Layer 3 - Data"]
         CMEK[CMEK\nEncryption key control]
-        DLP[Cloud DLP\nSensitive data discovery & masking]
+        DLP[Cloud DLP\nSensitive data discovery and masking]
         PS[Policy Tags\nColumn-level access control]
     end
 
-    subgraph Layer 4 - Governance
-        CAT[Data Catalog\nMetadata & lineage]
+    subgraph L4["Layer 4 - Governance"]
+        CAT[Data Catalog\nMetadata and lineage]
         AUD[Cloud Audit Logs\nWho did what, when]
         ORG[Org Policies\nPreventive guardrails]
     end
 
-    Layer 1 - Identity --> Layer 2 - Network Perimeter
-    Layer 2 - Network Perimeter --> Layer 3 - Data
-    Layer 3 - Data --> Layer 4 - Governance
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
 ```
 
 > **Exam principle**: No single layer is sufficient. A question asking "how do you prevent an insider from exfiltrating BigQuery data to a personal GCS bucket?" needs **both** IAM (restrict BQ permissions) **and** VPC-SC (block API calls to external GCS).
